@@ -12,6 +12,7 @@ func main() {
 	// Define command-line flags
 	inputFiles := flag.String("i", "", "Comma-separated list of input CSV file paths")
 	output := flag.String("o", "", "Path to the output CSV file (if omitted, writes to standard output)")
+	update := flag.Bool("u", false, "Update data1 with non-empty values from data2")
 	flag.Parse()
 
 	// Handle standard input if -i is not provided
@@ -52,7 +53,7 @@ func main() {
 			if idx == 0 {
 				mergedData = data
 			} else {
-				mergedData = mergeCSVData(mergedData, data)
+				mergedData = mergeCSVData(mergedData, data, *update)
 			}
 		}
 	}

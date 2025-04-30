@@ -24,7 +24,33 @@ func TestMergeCSVData(t *testing.T) {
 		{"Bob", "30", "Los Angeles"},
 	}
 
-	result := mergeCSVData(data1, data2)
+	result := mergeCSVData(data1, data2, false)
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Errorf("Expected %v, but got %v", expected, result)
+	}
+}
+
+func TestMergeCSVDataWithUpdate(t *testing.T) {
+	data1 := [][]string{
+		{"Name", "Age", "City"},
+		{"Alice", "", "New York"},
+		{"Bob", "30", ""},
+	}
+
+	data2 := [][]string{
+		{"Name", "Age", "City"},
+		{"Alice", "25", ""},
+		{"Bob", "", "Los Angeles"},
+	}
+
+	expected := [][]string{
+		{"Name", "Age", "City"},
+		{"Alice", "25", "New York"},
+		{"Bob", "30", "Los Angeles"},
+	}
+
+	result := mergeCSVData(data1, data2, true)
 
 	if !reflect.DeepEqual(result, expected) {
 		t.Errorf("Expected %v, but got %v", expected, result)

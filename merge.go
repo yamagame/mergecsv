@@ -1,6 +1,6 @@
 package main
 
-func mergeCSVData(data1, data2 [][]string) [][]string {
+func mergeCSVData(data1, data2 [][]string, update bool) [][]string {
 	if len(data1) == 0 || len(data2) == 0 {
 		return data1
 	}
@@ -20,8 +20,16 @@ func mergeCSVData(data1, data2 [][]string) [][]string {
 
 	for i := 1; i < len(data1); i++ {
 		for j, colIndex2 := range columnMap {
-			if data1[i][j] == "" && i < len(data2) && colIndex2 < len(data2[i]) {
-				data1[i][j] = data2[i][colIndex2]
+			if i < len(data2) && colIndex2 < len(data2[i]) {
+				if update {
+					if data2[i][colIndex2] != "" {
+						data1[i][j] = data2[i][colIndex2]
+					}
+				} else {
+					if data1[i][j] == "" {
+						data1[i][j] = data2[i][colIndex2]
+					}
+				}
 			}
 		}
 	}
