@@ -13,7 +13,14 @@ func main() {
 	inputFiles := flag.String("i", "", "Comma-separated list of input CSV file paths")
 	output := flag.String("o", "", "Path to the output CSV file (if omitted, writes to standard output)")
 	update := flag.Bool("u", false, "Update data1 with non-empty values from data2")
+	help := flag.Bool("help", false, "Show help message")
 	flag.Parse()
+
+	// Show help message if help flag is set
+	if *help {
+		flag.Usage()
+		os.Exit(0)
+	}
 
 	// Handle standard input if -i is not provided
 	var mergedData [][]string
